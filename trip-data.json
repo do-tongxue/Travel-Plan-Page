@@ -4,12 +4,12 @@
   "config": {
     "schemaVersion": "1.0.0",
     "modules": {
-      "flights": false,
-      "overview": false,
-      "itinerary": false,
-      "todo": false,
+      "flights": true,
+      "overview": true,
+      "itinerary": true,
+      "todo": true,
       "driving": false,
-      "ledger": false
+      "ledger": true
     },
     "language": "zh-CN",
     "persistence": {
@@ -17,80 +17,683 @@
     }
   },
   "metadata": {
-    "tripId": "unconfigured",
-    "title": "旅行计划",
+    "tripId": "italy-2026-rome-florence-venice",
+    "title": "義大利 2026｜Rome・Florence・Tuscany・Venice",
     "language": "zh-CN",
+    "destination": "義大利",
     "assets": {}
   },
   "trip": {
-    "status": "uninitialized",
-    "startDate": null,
-    "endDate": null,
-    "dayCount": 0,
-    "nightCountAway": 0,
-    "countries": [],
-    "primaryDestinationCountries": [],
-    "citiesAndAreas": [],
-    "routeSummary": "",
+    "status": "draft",
+    "startDate": "2026-10-09",
+    "endDate": "2026-10-20",
+    "dayCount": 12,
+    "nightCountAway": 11,
+    "countries": ["義大利"],
+    "destination": "義大利",
+    "primaryDestination": "義大利",
+    "primaryDestinationName": "義大利",
+    "primaryDestinationCountries": ["IT"],
+    "citiesAndAreas": ["Rome", "Florence", "Tuscany", "Venice"],
+    "routeSummary": "香港 → 羅馬 → 佛羅倫斯（含托斯卡尼）→ 威尼斯 → 香港",
     "groupSize": null
   },
-  "flightJourneys": [],
-  "flights": [],
-  "accommodations": [],
+  "flightJourneys": [
+    {
+      "id": "outbound",
+      "label": "去程：香港 → 羅馬",
+      "direction": "outbound"
+    },
+    {
+      "id": "inbound",
+      "label": "回程：威尼斯 → 香港",
+      "direction": "inbound"
+    }
+  ],
+  "flights": [
+    {
+      "id": "tk71",
+      "journeyId": "outbound",
+      "date": "2026-10-09",
+      "flightNumber": "TK71",
+      "airline": "Turkish Airlines",
+      "from": "HKG",
+      "to": "IST",
+      "departureTimeLocal": "22:30",
+      "arrivalTimeLocal": "待補充",
+      "status": "pending"
+    },
+    {
+      "id": "tk1861",
+      "journeyId": "outbound",
+      "date": "2026-10-10",
+      "flightNumber": "TK1861",
+      "airline": "Turkish Airlines",
+      "from": "IST",
+      "to": "FCO",
+      "departureTimeLocal": "待補充",
+      "arrivalTimeLocal": "09:20",
+      "status": "pending"
+    },
+    {
+      "id": "tk1870",
+      "journeyId": "inbound",
+      "date": "2026-10-19",
+      "flightNumber": "TK1870",
+      "airline": "Turkish Airlines",
+      "from": "VCE",
+      "to": "IST",
+      "departureTimeLocal": "20:00",
+      "arrivalTimeLocal": "待補充",
+      "status": "pending"
+    },
+    {
+      "id": "tk70",
+      "journeyId": "inbound",
+      "date": "2026-10-20",
+      "flightNumber": "TK70",
+      "airline": "Turkish Airlines",
+      "from": "IST",
+      "to": "HKG",
+      "departureTimeLocal": "待補充",
+      "arrivalTimeLocal": "17:15",
+      "status": "pending"
+    }
+  ],
+  "accommodations": [
+    {
+      "id": "acc-rome",
+      "city": "Rome",
+      "name": "Astom Suites",
+      "address": "Via Boezio, 31, 00193 Roma",
+      "checkInDate": "2026-10-10",
+      "checkOutDate": "2026-10-13"
+    },
+    {
+      "id": "acc-florence",
+      "city": "Florence",
+      "name": "Largo Fratelli Alinari, 15（近 Firenze SMN）",
+      "address": "Largo Fratelli Alinari, 15, Firenze",
+      "checkInDate": "2026-10-13",
+      "checkOutDate": "2026-10-17"
+    },
+    {
+      "id": "acc-venice",
+      "city": "Venice",
+      "name": "Hotel Agli Artisti",
+      "address": "Calle Priuli dei Cavaletti, 99/C, Venezia",
+      "checkInDate": "2026-10-17",
+      "checkOutDate": "2026-10-19"
+    }
+  ],
   "groundTransport": {
     "rentalCar": null,
     "rentalChecklist": [],
     "drivingNotes": [],
     "drivingReferenceLinks": [],
     "plannedRoadLegs": [],
-    "publicTransitAndRail": []
+    "publicTransitAndRail": [
+      {
+        "id": "rail-1",
+        "date": "2026-10-13",
+        "type": "train",
+        "from": "Roma Termini",
+        "to": "Firenze SMN",
+        "time": "08:55-10:31",
+        "note": "已規劃"
+      },
+      {
+        "id": "rail-2",
+        "date": "2026-10-17",
+        "type": "train",
+        "from": "Firenze SMN",
+        "to": "Venezia Santa Lucia",
+        "time": "09:39-11:55",
+        "note": "已規劃"
+      }
+    ]
   },
-  "days": [],
-  "places": [],
-  "restaurants": [],
-  "bookingsAndTickets": [],
-  "ticketPlanning": {
-    "statusStorage": "local",
-    "statusStorageNote": "门票状态默认只保存在当前浏览器。",
-    "items": []
-  },
-  "preTrip": {
-    "packingItems": [],
-    "preparationsExplicitlyMentioned": [],
-    "missingNote": ""
-  },
-  "mapLinks": {
-    "providedGoogleMapsLinks": [],
-    "note": "",
-    "cityLevelNavigationDisabled": false,
-    "navigationPolicy": {
-      "noNavigationTypes": [
-        "flight",
-        "note",
-        "rest"
+  "days": [
+    {
+      "day": 1,
+      "dayNumber": 1,
+      "date": "2026-10-09",
+      "isoDate": "2026-10-09",
+      "title": "香港出發",
+      "label": "香港出發",
+      "summary": "晚間航班出發，前往羅馬（經伊斯坦堡轉機）。",
+      "note": "晚間航班出發，前往羅馬（經伊斯坦堡轉機）。",
+      "schedule": [
+        {
+          "time": "22:30",
+          "type": "flight",
+          "text": "HKG 起飛（TK71）"
+        }
       ],
-      "selfNavigationTypes": [
-        "drive",
-        "return",
-        "transfer",
-        "check-in",
-        "check-out",
-        "restaurant",
-        "attraction",
-        "walk",
-        "hike"
+      "items": [
+        {
+          "time": "22:30",
+          "type": "flight",
+          "text": "HKG 起飛（TK71）"
+        }
+      ],
+      "activities": [
+        {
+          "time": "22:30",
+          "type": "flight",
+          "text": "HKG 起飛（TK71）"
+        }
       ]
     },
-    "navigationPlaces": []
-  },
-  "issuesAndUncertainties": [],
-  "map": {
-    "schemaVersion": "1.0-lite",
-    "mapMode": "template-auto",
-    "templateId": "auto",
-    "disclaimer": "本图仅表达地点的相对方位与路线顺序，不代表真实比例或精确地理边界。",
-    "places": [],
-    "routes": [],
-    "dailyRoutes": []
+    {
+      "day": 2,
+      "dayNumber": 2,
+      "date": "2026-10-10",
+      "isoDate": "2026-10-10",
+      "title": "抵達羅馬",
+      "label": "抵達羅馬",
+      "summary": "抵達 FCO，入住後輕鬆步行適應時差。",
+      "note": "抵達 FCO，入住後輕鬆步行適應時差。",
+      "schedule": [
+        {
+          "time": "09:20",
+          "type": "flight",
+          "text": "抵達 FCO（羅馬）"
+        },
+        {
+          "time": "11:30",
+          "type": "check-in",
+          "text": "前往並入住 Astom Suites"
+        },
+        {
+          "time": "傍晚",
+          "type": "walk",
+          "text": "西班牙台階 / 特雷維噴泉"
+        }
+      ],
+      "items": [
+        {
+          "time": "09:20",
+          "type": "flight",
+          "text": "抵達 FCO（羅馬）"
+        },
+        {
+          "time": "11:30",
+          "type": "check-in",
+          "text": "前往並入住 Astom Suites"
+        },
+        {
+          "time": "傍晚",
+          "type": "walk",
+          "text": "西班牙台階 / 特雷維噴泉"
+        }
+      ],
+      "activities": [
+        {
+          "time": "09:20",
+          "type": "flight",
+          "text": "抵達 FCO（羅馬）"
+        },
+        {
+          "time": "11:30",
+          "type": "check-in",
+          "text": "前往並入住 Astom Suites"
+        },
+        {
+          "time": "傍晚",
+          "type": "walk",
+          "text": "西班牙台階 / 特雷維噴泉"
+        }
+      ]
+    },
+    {
+      "day": 3,
+      "dayNumber": 3,
+      "date": "2026-10-11",
+      "isoDate": "2026-10-11",
+      "title": "羅馬古城日",
+      "label": "羅馬古城日",
+      "summary": "上午古城步行，下午按時段進入鬥獸場。",
+      "note": "上午古城步行，下午按時段進入鬥獸場。",
+      "schedule": [
+        {
+          "time": "08:30",
+          "type": "attraction",
+          "text": "特雷維噴泉"
+        },
+        {
+          "time": "09:15",
+          "type": "attraction",
+          "text": "萬神殿"
+        },
+        {
+          "time": "10:00",
+          "type": "attraction",
+          "text": "納沃納廣場"
+        },
+        {
+          "time": "14:15",
+          "type": "attraction",
+          "text": "鬥獸場（已確認時段）"
+        }
+      ],
+      "items": [
+        {
+          "time": "08:30",
+          "type": "attraction",
+          "text": "特雷維噴泉"
+        },
+        {
+          "time": "09:15",
+          "type": "attraction",
+          "text": "萬神殿"
+        },
+        {
+          "time": "10:00",
+          "type": "attraction",
+          "text": "納沃納廣場"
+        },
+        {
+          "time": "14:15",
+          "type": "attraction",
+          "text": "鬥獸場（已確認時段）"
+        }
+      ],
+      "activities": [
+        {
+          "time": "08:30",
+          "type": "attraction",
+          "text": "特雷維噴泉"
+        },
+        {
+          "time": "09:15",
+          "type": "attraction",
+          "text": "萬神殿"
+        },
+        {
+          "time": "10:00",
+          "type": "attraction",
+          "text": "納沃納廣場"
+        },
+        {
+          "time": "14:15",
+          "type": "attraction",
+          "text": "鬥獸場（已確認時段）"
+        }
+      ]
+    },
+    {
+      "day": 4,
+      "dayNumber": 4,
+      "date": "2026-10-12",
+      "isoDate": "2026-10-12",
+      "title": "梵蒂岡日",
+      "label": "梵蒂岡日",
+      "summary": "早上聖彼得大教堂，下午梵蒂岡博物館。",
+      "note": "早上聖彼得大教堂，下午梵蒂岡博物館。",
+      "schedule": [
+        {
+          "time": "07:30",
+          "type": "attraction",
+          "text": "聖彼得大教堂"
+        },
+        {
+          "time": "13:00",
+          "type": "attraction",
+          "text": "梵蒂岡博物館 + 西斯汀禮拜堂"
+        }
+      ],
+      "items": [
+        {
+          "time": "07:30",
+          "type": "attraction",
+          "text": "聖彼得大教堂"
+        },
+        {
+          "time": "13:00",
+          "type": "attraction",
+          "text": "梵蒂岡博物館 + 西斯汀禮拜堂"
+        }
+      ],
+      "activities": [
+        {
+          "time": "07:30",
+          "type": "attraction",
+          "text": "聖彼得大教堂"
+        },
+        {
+          "time": "13:00",
+          "type": "attraction",
+          "text": "梵蒂岡博物館 + 西斯汀禮拜堂"
+        }
+      ]
+    },
+    {
+      "day": 5,
+      "dayNumber": 5,
+      "date": "2026-10-13",
+      "isoDate": "2026-10-13",
+      "title": "羅馬前往佛羅倫斯",
+      "label": "羅馬前往佛羅倫斯",
+      "summary": "上午高鐵，下午佛羅倫斯老城散步。",
+      "note": "上午高鐵，下午佛羅倫斯老城散步。",
+      "schedule": [
+        {
+          "time": "08:55-10:31",
+          "type": "transfer",
+          "text": "Roma Termini → Firenze SMN（火車）"
+        },
+        {
+          "time": "下午",
+          "type": "walk",
+          "text": "主教座堂外觀 / 老橋 / 市中心"
+        }
+      ],
+      "items": [
+        {
+          "time": "08:55-10:31",
+          "type": "transfer",
+          "text": "Roma Termini → Firenze SMN（火車）"
+        },
+        {
+          "time": "下午",
+          "type": "walk",
+          "text": "主教座堂外觀 / 老橋 / 市中心"
+        }
+      ],
+      "activities": [
+        {
+          "time": "08:55-10:31",
+          "type": "transfer",
+          "text": "Roma Termini → Firenze SMN（火車）"
+        },
+        {
+          "time": "下午",
+          "type": "walk",
+          "text": "主教座堂外觀 / 老橋 / 市中心"
+        }
+      ]
+    },
+    {
+      "day": 6,
+      "dayNumber": 6,
+      "date": "2026-10-14",
+      "isoDate": "2026-10-14",
+      "title": "烏菲茲美術館日",
+      "label": "烏菲茲美術館日",
+      "summary": "核心安排為 Uffizi，其餘時段可機動調整。",
+      "note": "核心安排為 Uffizi，其餘時段可機動調整。",
+      "schedule": [
+        {
+          "time": "09:00",
+          "type": "attraction",
+          "text": "Uffizi Gallery（待預訂）"
+        }
+      ],
+      "items": [
+        {
+          "time": "09:00",
+          "type": "attraction",
+          "text": "Uffizi Gallery（待預訂）"
+        }
+      ],
+      "activities": [
+        {
+          "time": "09:00",
+          "type": "attraction",
+          "text": "Uffizi Gallery（待預訂）"
+        }
+      ]
+    },
+    {
+      "day": 7,
+      "dayNumber": 7,
+      "date": "2026-10-15",
+      "isoDate": "2026-10-15",
+      "title": "托斯卡尼一日遊",
+      "label": "托斯卡尼一日遊",
+      "summary": "建議 Siena / San Gimignano / Chianti 路線。",
+      "note": "建議 Siena / San Gimignano / Chianti 路線。",
+      "schedule": [
+        {
+          "time": "08:00-19:00",
+          "type": "transfer",
+          "text": "托斯卡尼一日遊（Option 3）"
+        }
+      ],
+      "items": [
+        {
+          "time": "08:00-19:00",
+          "type": "transfer",
+          "text": "托斯卡尼一日遊（Option 3）"
+        }
+      ],
+      "activities": [
+        {
+          "time": "08:00-19:00",
+          "type": "transfer",
+          "text": "托斯卡尼一日遊（Option 3）"
+        }
+      ]
+    },
+    {
+      "day": 8,
+      "dayNumber": 8,
+      "date": "2026-10-16",
+      "isoDate": "2026-10-16",
+      "title": "大衛像與穹頂",
+      "label": "大衛像與穹頂",
+      "summary": "上午 Accademia，下午 Duomo Dome。",
+      "note": "上午 Accademia，下午 Duomo Dome。",
+      "schedule": [
+        {
+          "time": "09:00",
+          "type": "attraction",
+          "text": "Accademia Gallery（待預訂）"
+        },
+        {
+          "time": "14:30",
+          "type": "attraction",
+          "text": "Brunelleschi Dome（待預訂）"
+        }
+      ],
+      "items": [
+        {
+          "time": "09:00",
+          "type": "attraction",
+          "text": "Accademia Gallery（待預訂）"
+        },
+        {
+          "time": "14:30",
+          "type": "attraction",
+          "text": "Brunelleschi Dome（待預訂）"
+        }
+      ],
+      "activities": [
+        {
+          "time": "09:00",
+          "type": "attraction",
+          "text": "Accademia Gallery（待預訂）"
+        },
+        {
+          "time": "14:30",
+          "type": "attraction",
+          "text": "Brunelleschi Dome（待預訂）"
+        }
+      ]
+    },
+    {
+      "day": 9,
+      "dayNumber": 9,
+      "date": "2026-10-17",
+      "isoDate": "2026-10-17",
+      "title": "佛羅倫斯前往威尼斯",
+      "label": "佛羅倫斯前往威尼斯",
+      "summary": "上午高鐵，下午主島步行。",
+      "note": "上午高鐵，下午主島步行。",
+      "schedule": [
+        {
+          "time": "09:39-11:55",
+          "type": "transfer",
+          "text": "Firenze SMN → Venezia Santa Lucia（火車）"
+        }
+      ],
+      "items": [
+        {
+          "time": "09:39-11:55",
+          "type": "transfer",
+          "text": "Firenze SMN → Venezia Santa Lucia（火車）"
+        }
+      ],
+      "activities": [
+        {
+          "time": "09:39-11:55",
+          "type": "transfer",
+          "text": "Firenze SMN → Venezia Santa Lucia（火車）"
+        }
+      ]
+    },
+    {
+      "day": 10,
+      "dayNumber": 10,
+      "date": "2026-10-18",
+      "isoDate": "2026-10-18",
+      "title": "威尼斯核心景點",
+      "label": "威尼斯核心景點",
+      "summary": "總督宮與聖馬可大教堂為主。",
+      "note": "總督宮與聖馬可大教堂為主。",
+      "schedule": [
+        {
+          "time": "09:00",
+          "type": "attraction",
+          "text": "Doge's Palace（待預訂）"
+        },
+        {
+          "time": "14:00",
+          "type": "attraction",
+          "text": "Basilica di San Marco（待預訂）"
+        }
+      ],
+      "items": [
+        {
+          "time": "09:00",
+          "type": "attraction",
+          "text": "Doge's Palace（待預訂）"
+        },
+        {
+          "time": "14:00",
+          "type": "attraction",
+          "text": "Basilica di San Marco（待預訂）"
+        }
+      ],
+      "activities": [
+        {
+          "time": "09:00",
+          "type": "attraction",
+          "text": "Doge's Palace（待預訂）"
+        },
+        {
+          "time": "14:00",
+          "type": "attraction",
+          "text": "Basilica di San Marco（待預訂）"
+        }
+      ]
+    },
+    {
+      "day": 11,
+      "dayNumber": 11,
+      "date": "2026-10-19",
+      "isoDate": "2026-10-19",
+      "title": "威尼斯離境",
+      "label": "威尼斯離境",
+      "summary": "白天收尾，晚間航班離開威尼斯。",
+      "note": "白天收尾，晚間航班離開威尼斯。",
+      "schedule": [
+        {
+          "time": "15:00",
+          "type": "transfer",
+          "text": "前往 VCE 機場"
+        },
+        {
+          "time": "20:00",
+          "type": "flight",
+          "text": "VCE 起飛（TK1870）"
+        }
+      ],
+      "items": [
+        {
+          "time": "15:00",
+          "type": "transfer",
+          "text": "前往 VCE 機場"
+        },
+        {
+          "time": "20:00",
+          "type": "flight",
+          "text": "VCE 起飛（TK1870）"
+        }
+      ],
+      "activities": [
+        {
+          "time": "15:00",
+          "type": "transfer",
+          "text": "前往 VCE 機場"
+        },
+        {
+          "time": "20:00",
+          "type": "flight",
+          "text": "VCE 起飛（TK1870）"
+        }
+      ]
+    },
+    {
+      "day": 12,
+      "dayNumber": 12,
+      "date": "2026-10-20",
+      "isoDate": "2026-10-20",
+      "title": "抵達香港",
+      "label": "抵達香港",
+      "summary": "返程抵港，行程完成。",
+      "note": "返程抵港，行程完成。",
+      "schedule": [
+        {
+          "time": "17:15",
+          "type": "flight",
+          "text": "抵達 HKG（TK70）"
+        }
+      ],
+      "items": [
+        {
+          "time": "17:15",
+          "type": "flight",
+          "text": "抵達 HKG（TK70）"
+        }
+      ],
+      "activities": [
+        {
+          "time": "17:15",
+          "type": "flight",
+          "text": "抵達 HKG（TK70）"
+        }
+      ]
+    }
+  ],
+  "preTrip": {
+    "packingItems": [
+      {
+        "id": 1,
+        "text": "轉換插頭 / 充電器 / 行動電源",
+        "completed": false
+      },
+      {
+        "id": 2,
+        "text": "護照與保險文件備份",
+        "completed": false
+      },
+      {
+        "id": 3,
+        "text": "常備藥與防曬",
+        "completed": false
+      }
+    ]
   }
 }
