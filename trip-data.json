@@ -1,96 +1,390 @@
 {
-  "$schema": "./schemas/trip-data.schema.json",
-  "schemaVersion": "2.0-lite",
-  "config": {
-    "schemaVersion": "1.0.0",
-    "modules": {
-      "flights": false,
-      "overview": false,
-      "itinerary": false,
-      "todo": false,
-      "driving": false,
-      "ledger": false
-    },
-    "language": "zh-CN",
-    "persistence": {
-      "mode": "local"
-    }
-  },
   "metadata": {
-    "tripId": "unconfigured",
-    "title": "旅行计划",
-    "language": "zh-CN",
-    "assets": {}
+    "tripId": "italy-2026-rome-florence-venice",
+    "title": "意大利 2026：Rome · Florence · Tuscany · Venice"
   },
   "trip": {
-    "status": "uninitialized",
-    "startDate": null,
-    "endDate": null,
-    "dayCount": 0,
-    "nightCountAway": 0,
-    "countries": [],
-    "primaryDestinationCountries": [],
-    "citiesAndAreas": [],
-    "routeSummary": "",
-    "groupSize": null
+    "status": "draft",
+    "startDate": "2026-10-09",
+    "endDate": "2026-10-20",
+    "dayCount": 12,
+    "primaryDestinationCountries": ["IT"],
+    "primaryDestinationName": "意大利"
   },
-  "flightJourneys": [],
-  "flights": [],
-  "accommodations": [],
-  "groundTransport": {
-    "rentalCar": null,
-    "rentalChecklist": [],
-    "drivingNotes": [],
-    "drivingReferenceLinks": [],
-    "plannedRoadLegs": [],
-    "publicTransitAndRail": []
+  "config": {
+    "language": "zh-HK",
+    "persistence": {
+      "mode": "local"
+    },
+    "modules": {
+      "flights": true,
+      "overview": true,
+      "itinerary": true,
+      "driving": false,
+      "todo": true,
+      "ledger": true
+    }
   },
-  "days": [],
-  "places": [],
-  "restaurants": [],
-  "bookingsAndTickets": [],
+  "flightJourneys": [
+    {
+      "id": "outbound-hkg-fco",
+      "direction": "outbound"
+    },
+    {
+      "id": "inbound-vce-hkg",
+      "direction": "inbound"
+    }
+  ],
+  "flights": [
+    {
+      "id": "f-out-1",
+      "journeyId": "outbound-hkg-fco",
+      "sequence": 1,
+      "airline": { "name": "Turkish Airlines" },
+      "flightNumber": "TK71",
+      "departure": {
+        "airportCode": "HKG",
+        "city": "Hong Kong",
+        "date": "2026-10-09",
+        "time": "22:30",
+        "utcOffset": "+08:00"
+      },
+      "arrival": {
+        "airportCode": "IST",
+        "city": "Istanbul",
+        "date": "2026-10-10",
+        "time": "待補充",
+        "utcOffset": "+03:00"
+      },
+      "status": "pending",
+      "missingFields": ["arrival.time"]
+    },
+    {
+      "id": "f-out-2",
+      "journeyId": "outbound-hkg-fco",
+      "sequence": 2,
+      "airline": { "name": "Turkish Airlines" },
+      "flightNumber": "TK1861",
+      "departure": {
+        "airportCode": "IST",
+        "city": "Istanbul",
+        "date": "2026-10-10",
+        "time": "待補充",
+        "utcOffset": "+03:00"
+      },
+      "arrival": {
+        "airportCode": "FCO",
+        "city": "Rome",
+        "date": "2026-10-10",
+        "time": "09:20",
+        "utcOffset": "+02:00"
+      },
+      "status": "pending",
+      "missingFields": ["departure.time"]
+    },
+    {
+      "id": "f-in-1",
+      "journeyId": "inbound-vce-hkg",
+      "sequence": 1,
+      "airline": { "name": "Turkish Airlines" },
+      "flightNumber": "TK1870",
+      "departure": {
+        "airportCode": "VCE",
+        "city": "Venice",
+        "date": "2026-10-19",
+        "time": "20:00",
+        "utcOffset": "+02:00"
+      },
+      "arrival": {
+        "airportCode": "IST",
+        "city": "Istanbul",
+        "date": "2026-10-19",
+        "time": "待補充",
+        "utcOffset": "+03:00"
+      },
+      "status": "pending",
+      "missingFields": ["arrival.time"]
+    },
+    {
+      "id": "f-in-2",
+      "journeyId": "inbound-vce-hkg",
+      "sequence": 2,
+      "airline": { "name": "Turkish Airlines" },
+      "flightNumber": "TK70",
+      "departure": {
+        "airportCode": "IST",
+        "city": "Istanbul",
+        "date": "2026-10-20",
+        "time": "待補充",
+        "utcOffset": "+03:00"
+      },
+      "arrival": {
+        "airportCode": "HKG",
+        "city": "Hong Kong",
+        "date": "2026-10-20",
+        "time": "17:15",
+        "utcOffset": "+08:00"
+      },
+      "status": "pending",
+      "missingFields": ["departure.time"]
+    }
+  ],
+  "accommodations": [
+    {
+      "id": "acc-rome",
+      "city": "Rome",
+      "name": "Astom Suites",
+      "address": "Via Boezio, 31, 00193 Roma",
+      "checkInDate": "2026-10-10",
+      "checkOutDate": "2026-10-13"
+    },
+    {
+      "id": "acc-florence",
+      "city": "Florence",
+      "name": "Largo Fratelli Alinari, 15",
+      "address": "Near Firenze SMN",
+      "checkInDate": "2026-10-13",
+      "checkOutDate": "2026-10-17"
+    },
+    {
+      "id": "acc-venice",
+      "city": "Venice",
+      "name": "Hotel Agli Artisti",
+      "address": "Near Venezia Santa Lucia",
+      "checkInDate": "2026-10-17",
+      "checkOutDate": "2026-10-19"
+    }
+  ],
+  "places": [
+    { "id": "rome-trevi", "nameZh": "特雷維噴泉", "name": "Trevi Fountain" },
+    { "id": "rome-pantheon", "nameZh": "萬神殿", "name": "Pantheon" },
+    { "id": "rome-navona", "nameZh": "納沃納廣場", "name": "Piazza Navona" },
+    { "id": "rome-colosseum", "nameZh": "鬥獸場", "name": "Colosseum" },
+    { "id": "rome-forum", "nameZh": "古羅馬廣場", "name": "Roman Forum" },
+    { "id": "rome-vatican-museums", "nameZh": "梵蒂岡博物館", "name": "Vatican Museums" },
+    { "id": "rome-stpeter", "nameZh": "聖彼得大教堂", "name": "St. Peter's Basilica" },
+    { "id": "florence-uffizi", "nameZh": "烏菲茲美術館", "name": "Uffizi Gallery" },
+    { "id": "florence-accademia", "nameZh": "學院美術館", "name": "Accademia Gallery" },
+    { "id": "florence-duomo", "nameZh": "佛羅倫斯主教座堂", "name": "Florence Duomo" },
+    { "id": "florence-michelangelo", "nameZh": "米開朗基羅廣場", "name": "Piazzale Michelangelo" },
+    { "id": "tuscany-siena", "nameZh": "錫耶納", "name": "Siena" },
+    { "id": "tuscany-san-gimignano", "nameZh": "聖吉米尼亞諾", "name": "San Gimignano" },
+    { "id": "tuscany-chianti", "nameZh": "基安蒂", "name": "Chianti" },
+    { "id": "venice-rialto", "nameZh": "里亞托橋", "name": "Rialto Bridge" },
+    { "id": "venice-san-marco", "nameZh": "聖馬可廣場", "name": "Piazza San Marco" },
+    { "id": "venice-doges", "nameZh": "總督宮", "name": "Doge's Palace" },
+    { "id": "venice-basilica", "nameZh": "聖馬可大教堂", "name": "Basilica di San Marco" }
+  ],
   "ticketPlanning": {
-    "statusStorage": "local",
-    "statusStorageNote": "门票状态默认只保存在当前浏览器。",
-    "items": []
+    "items": [
+      {
+        "id": "t-colosseum-20261011",
+        "day": 3,
+        "name": "Colosseum",
+        "requirement": "14:15 入場（已預約）",
+        "status": "booked"
+      },
+      {
+        "id": "t-uffizi-20261014",
+        "day": 6,
+        "name": "Uffizi Gallery",
+        "requirement": "09:00 / 09:30 / 10:00",
+        "status": "pending"
+      },
+      {
+        "id": "t-accademia-20261016",
+        "day": 8,
+        "name": "Accademia Gallery",
+        "requirement": "09:00 / 09:30",
+        "status": "pending"
+      },
+      {
+        "id": "t-duomo-dome-20261016",
+        "day": 8,
+        "name": "Brunelleschi Dome",
+        "requirement": "14:00 / 15:00",
+        "status": "pending"
+      },
+      {
+        "id": "t-doges-20261018",
+        "day": 10,
+        "name": "Doge's Palace",
+        "requirement": "09:00 / 10:00",
+        "status": "pending"
+      },
+      {
+        "id": "t-san-marco-20261018",
+        "day": 10,
+        "name": "Basilica di San Marco",
+        "requirement": "14:00 / 15:00",
+        "status": "pending"
+      }
+    ]
   },
-  "preTrip": {
-    "packingItems": [],
-    "preparationsExplicitlyMentioned": [],
-    "missingNote": ""
-  },
-  "mapLinks": {
-    "providedGoogleMapsLinks": [],
-    "note": "",
-    "cityLevelNavigationDisabled": false,
-    "navigationPolicy": {
-      "noNavigationTypes": [
-        "flight",
-        "note",
-        "rest"
-      ],
-      "selfNavigationTypes": [
-        "drive",
-        "return",
-        "transfer",
-        "check-in",
-        "check-out",
-        "restaurant",
-        "attraction",
-        "walk",
-        "hike"
+  "days": [
+    {
+      "day": 1,
+      "date": "2026-10-09",
+      "title": "香港出發",
+      "locations": ["Hong Kong"],
+      "schedule": [
+        { "id": "d1-s1", "time": "22:30", "type": "flight", "text": "HKG 起飛（TK71）" }
       ]
     },
-    "navigationPlaces": []
+    {
+      "day": 2,
+      "date": "2026-10-10",
+      "title": "抵達羅馬",
+      "locations": ["Rome"],
+      "schedule": [
+        { "id": "d2-s1", "time": "09:20", "type": "flight", "text": "抵達 FCO" },
+        { "id": "d2-s2", "time": "11:30", "type": "transport", "text": "前往 Astom Suites" },
+        { "id": "d2-s3", "time": "傍晚", "type": "visit", "text": "Spanish Steps / Trevi Fountain" }
+      ]
+    },
+    {
+      "day": 3,
+      "date": "2026-10-11",
+      "title": "羅馬古城日（下午鬥獸場）",
+      "locations": ["Rome"],
+      "schedule": [
+        { "id": "d3-s1", "time": "08:30", "type": "visit", "text": "Trevi Fountain", "placeId": "rome-trevi" },
+        { "id": "d3-s2", "time": "09:15", "type": "visit", "text": "Pantheon", "placeId": "rome-pantheon" },
+        { "id": "d3-s3", "time": "10:00", "type": "visit", "text": "Piazza Navona", "placeId": "rome-navona" },
+        { "id": "d3-s4", "time": "14:15", "type": "ticket", "text": "Colosseum 入場", "placeId": "rome-colosseum", "ticketIds": ["t-colosseum-20261011"] },
+        { "id": "d3-s5", "time": "15:30", "type": "visit", "text": "Roman Forum / Palatine（精簡）", "placeId": "rome-forum" }
+      ]
+    },
+    {
+      "day": 4,
+      "date": "2026-10-12",
+      "title": "梵蒂岡日",
+      "locations": ["Rome"],
+      "schedule": [
+        { "id": "d4-s1", "time": "07:30", "type": "visit", "text": "St. Peter's Basilica", "placeId": "rome-stpeter" },
+        { "id": "d4-s2", "time": "13:00", "type": "visit", "text": "Vatican Museums + Sistine Chapel", "placeId": "rome-vatican-museums" }
+      ]
+    },
+    {
+      "day": 5,
+      "date": "2026-10-13",
+      "title": "羅馬 → 佛羅倫斯",
+      "locations": ["Rome", "Florence"],
+      "schedule": [
+        { "id": "d5-s1", "time": "08:55-10:31", "type": "train", "text": "Roma Termini → Firenze SMN" },
+        { "id": "d5-s2", "time": "下午", "type": "visit", "text": "Duomo 外觀 / 老橋 / 市中心散步" },
+        { "id": "d5-s3", "time": "傍晚", "type": "visit", "text": "Piazzale Michelangelo", "placeId": "florence-michelangelo" }
+      ]
+    },
+    {
+      "day": 6,
+      "date": "2026-10-14",
+      "title": "佛羅倫斯・烏菲茲日",
+      "locations": ["Florence"],
+      "schedule": [
+        { "id": "d6-s1", "time": "09:00", "type": "ticket", "text": "Uffizi（待預約）", "placeId": "florence-uffizi", "ticketIds": ["t-uffizi-20261014"] }
+      ]
+    },
+    {
+      "day": 7,
+      "date": "2026-10-15",
+      "title": "托斯卡納一日遊",
+      "locations": ["Tuscany"],
+      "schedule": [
+        { "id": "d7-s1", "time": "08:00-19:00", "type": "tour", "text": "Siena + San Gimignano + Chianti（Option 3 建議）" }
+      ]
+    },
+    {
+      "day": 8,
+      "date": "2026-10-16",
+      "title": "大衛像 + Duomo 穹頂",
+      "locations": ["Florence"],
+      "schedule": [
+        { "id": "d8-s1", "time": "09:00", "type": "ticket", "text": "Accademia（待預約）", "placeId": "florence-accademia", "ticketIds": ["t-accademia-20261016"] },
+        { "id": "d8-s2", "time": "14:30", "type": "ticket", "text": "Brunelleschi Dome（待預約）", "placeId": "florence-duomo", "ticketIds": ["t-duomo-dome-20261016"] },
+        { "id": "d8-s3", "time": "19:30", "type": "meal", "text": "Trattoria Dall'Oste（建議預約）" }
+      ]
+    },
+    {
+      "day": 9,
+      "date": "2026-10-17",
+      "title": "佛羅倫斯 → 威尼斯",
+      "locations": ["Florence", "Venice"],
+      "schedule": [
+        { "id": "d9-s1", "time": "09:39-11:55", "type": "train", "text": "Firenze SMN → Venezia Santa Lucia" },
+        { "id": "d9-s2", "time": "下午", "type": "visit", "text": "Vaporetto Line 1 / Rialto / San Marco 夜景" }
+      ]
+    },
+    {
+      "day": 10,
+      "date": "2026-10-18",
+      "title": "威尼斯核心日",
+      "locations": ["Venice"],
+      "schedule": [
+        { "id": "d10-s1", "time": "09:00", "type": "ticket", "text": "Doge's Palace（待預約）", "placeId": "venice-doges", "ticketIds": ["t-doges-20261018"] },
+        { "id": "d10-s2", "time": "14:00", "type": "ticket", "text": "Basilica di San Marco（待預約）", "placeId": "venice-basilica", "ticketIds": ["t-san-marco-20261018"] }
+      ]
+    },
+    {
+      "day": 11,
+      "date": "2026-10-19",
+      "title": "威尼斯離境",
+      "locations": ["Venice"],
+      "schedule": [
+        { "id": "d11-s1", "time": "15:00", "type": "transport", "text": "前往 VCE 機場" },
+        { "id": "d11-s2", "time": "20:00", "type": "flight", "text": "VCE 起飛（TK1870）" }
+      ]
+    },
+    {
+      "day": 12,
+      "date": "2026-10-20",
+      "title": "抵達香港",
+      "locations": ["Hong Kong"],
+      "schedule": [
+        { "id": "d12-s1", "time": "17:15", "type": "flight", "text": "抵達 HKG（TK70）" }
+      ]
+    }
+  ],
+  "preTrip": {
+    "packingItems": [
+      { "id": "todo-1", "text": "確認 10/12 Vatican Museums 13:00 門票", "completed": false },
+      { "id": "todo-2", "text": "預約 10/14 Uffizi（09:00/09:30）", "completed": false },
+      { "id": "todo-3", "text": "預約 10/16 Accademia（09:00/09:30）", "completed": false },
+      { "id": "todo-4", "text": "預約 10/16 Duomo Dome（14:00/15:00）", "completed": false },
+      { "id": "todo-5", "text": "確認 10/15 Tuscany tour（Option 3）", "completed": false },
+      { "id": "todo-6", "text": "預約 10/18 Doge's Palace + San Marco", "completed": false },
+      { "id": "todo-7", "text": "預約 10/16 Trattoria Dall'Oste 晚餐", "completed": false }
+    ]
   },
-  "issuesAndUncertainties": [],
+  "rentalCar": null,
+  "ledger": {
+    "currency": "EUR",
+    "participants": [],
+    "items": []
+  },
   "map": {
-    "schemaVersion": "1.0-lite",
     "mapMode": "template-auto",
     "templateId": "auto",
-    "disclaimer": "本图仅表达地点的相对方位与路线顺序，不代表真实比例或精确地理边界。",
-    "places": [],
-    "routes": [],
-    "dailyRoutes": []
+    "region": "IT",
+    "places": [
+      { "id": "rome-colosseum", "name": "Colosseum", "lat": 41.8902, "lng": 12.4922, "countryCode": "IT" },
+      { "id": "rome-vatican", "name": "Vatican Area", "lat": 41.9022, "lng": 12.4539, "countryCode": "IT" },
+      { "id": "florence-duomo", "name": "Florence Duomo", "lat": 43.7731, "lng": 11.2560, "countryCode": "IT" },
+      { "id": "tuscany-siena", "name": "Siena", "lat": 43.3188, "lng": 11.3308, "countryCode": "IT" },
+      { "id": "venice-san-marco", "name": "Piazza San Marco", "lat": 45.4342, "lng": 12.3387, "countryCode": "IT" }
+    ],
+    "routes": [
+      { "id": "r1", "day": 3, "placeIds": ["rome-colosseum", "rome-vatican"] },
+      { "id": "r2", "day": 5, "placeIds": ["rome-colosseum", "florence-duomo"] },
+      { "id": "r3", "day": 7, "placeIds": ["florence-duomo", "tuscany-siena"] },
+      { "id": "r4", "day": 9, "placeIds": ["florence-duomo", "venice-san-marco"] }
+    ],
+    "dailyRoutes": [
+      { "day": 3, "placeIds": ["rome-colosseum", "rome-vatican"] },
+      { "day": 5, "placeIds": ["rome-colosseum", "florence-duomo"] },
+      { "day": 7, "placeIds": ["florence-duomo", "tuscany-siena"] },
+      { "day": 9, "placeIds": ["florence-duomo", "venice-san-marco"] }
+    ]
   }
 }
+
