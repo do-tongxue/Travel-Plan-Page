@@ -22,18 +22,19 @@
     "language": "zh-CN",
     "assets": {}
   },
-  "trip": {
-    "status": "uninitialized",
-    "startDate": null,
-    "endDate": null,
-    "dayCount": 0,
-    "nightCountAway": 0,
-    "countries": [],
-    "primaryDestinationCountries": [],
-    "citiesAndAreas": [],
-    "routeSummary": "",
-    "groupSize": null
-  },
+"trip": {
+  "status": "planned",
+  "startDate": "2026-10-09",
+  "endDate": "2026-10-20",
+  "dayCount": 12,
+  "nightCountAway": 11,
+  "countries": ["意大利"],
+  "primaryDestinationName": "意大利",
+  "primaryDestinationCountries": ["IT"],
+  "citiesAndAreas": ["Rome", "Florence", "Tuscany", "Venice"],
+  "routeSummary": "香港 → 罗马 → 佛罗伦萨（含托斯卡纳）→ 威尼斯 → 香港",
+  "groupSize": null
+} ,
   "flightJourneys": [],
   "flights": [],
   "accommodations": [],
