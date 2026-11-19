@@ -63,6 +63,8 @@ Agent 会先阅读和整理你的旅行计划，确认需要的模块以及明�
 
 如果你对地图有更高要求，也可以在第一版页面完成后，再单独让 AI 对地图继续修改和完善。
 
+如果确实需要真实地理底图（而不是示意图），可以选用可选的 `map.basemap` 模式：它按经纬度真投影落点，需要本机安装 Playwright 并在生成时联网，不影响上面的默认流程。说明见 [`references/advanced/real-basemap.md`](references/advanced/real-basemap.md)。
+
 ---
 
 ## 本地预览
