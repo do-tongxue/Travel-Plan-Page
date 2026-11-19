@@ -25,6 +25,27 @@ function exists(relative) {
   return fs.existsSync(path.join(ROOT, relative));
 }
 
+function pngSize(relative) {
+  const file = path.join(ROOT, relative);
+  if (!fs.existsSync(file)) return null;
+  const buffer = fs.readFileSync(file);
+  if (buffer.length < 24) return null;
+  if (buffer.readUInt32BE(0) !== 0x89504e47) return null;
+  if (buffer.toString("ascii", 12, 16) !== "IHDR") return null;
+  return { width: buffer.readUInt32BE(16), height: buffer.readUInt32BE(20) };
+}
+
+const MAX_MERCATOR_LAT = 85.05112878;
+
+function validBasemapBounds(bounds) {
+  if (!Array.isArray(bounds) || bounds.length !== 4 || !bounds.every((value) => Number.isFinite(value))) return false;
+  const [west, south, east, north] = bounds;
+  if (!(east > west) || !(north > south)) return false;
+  if (west < -180 || east > 180) return false;
+  if (south < -MAX_MERCATOR_LAT || north > MAX_MERCATOR_LAT) return false;
+  return true;
+}
+
 function pending(value) {
   return /待补充|待确认|pending/i.test(JSON.stringify(value || ""));
 }
@@ -170,13 +191,80 @@ if (map) {
   if (map.mapMode !== "template-auto") errors.push("map.mapMode 必须为 template-auto");
 }
 
+const basemap = map && typeof map.basemap === "object" && !Array.isArray(map.basemap) ? map.basemap : null;
+if (map?.basemap !== undefined && !basemap) errors.push("map.basemap 必须是对象");
+if (basemap) {
+  if (uninitialized) errors.push("空白底板不得包含 map.basemap");
+  if (config?.modules?.overview === false) warnings.push("map.basemap 已设置，但地图模块已关闭，底图不会被使用");
+  if ((map.regions || []).length > 1) errors.push("map.basemap 目前只支持单一目的地；多目的地请拆分行程或使用 template-auto");
+
+  const file = typeof basemap.file === "string" ? basemap.file.trim() : "";
+  if (!file) {
+    errors.push("map.basemap.file 必须是非空字符串");
+  } else {
+    const normalized = path.posix.normalize(file);
+    if (/^[a-z][a-z0-9+.-]*:/i.test(file) || path.posix.isAbsolute(file) || normalized.startsWith("../") || normalized.includes("/../")) {
+      errors.push(`map.basemap.file 必须是仓库内相对路径：${file}`);
+    } else if (!normalized.startsWith("assets/maps/")) {
+      errors.push(`map.basemap.file 必须位于 assets/maps/ 下：${file}`);
+    } else if (!/\.png$/i.test(normalized)) {
+      errors.push(`map.basemap.file 必须是 PNG：${file}`);
+    } else if (!exists(normalized)) {
+      errors.push(`map.basemap.file 不存在：${file}；请先运行 npm run build:basemap`);
+    } else {
+      const size = pngSize(normalized);
+      if (!size || size.width !== 1448 || size.height !== 1086) {
+        errors.push(`map.basemap.file 必须是 1448x1086 的 PNG：${file}${size ? ` (实际 ${size.width}x${size.height})` : ""}`);
+      }
+    }
+  }
+
+  if (!validBasemapBounds(basemap.bounds)) {
+    errors.push("map.basemap.bounds 必须是 [west, south, east, north]，四个有限数值，east>west、north>south，且不超出 Web Mercator 范围");
+  }
+  if (typeof basemap.attribution !== "string" || !basemap.attribution.trim()) {
+    errors.push("map.basemap.attribution 必须是非空的版权署名");
+  }
+  if (basemap.zoom !== undefined && (!Number.isInteger(basemap.zoom) || basemap.zoom < 0 || basemap.zoom > 22)) {
+    errors.push("map.basemap.zoom 必须是 0-22 的整数");
+  }
+
+  if ((map.places || []).length >= 8) {
+    warnings.push("真实底图模式不做点位疏散：地点较多时圆点可能重叠，标签仍会自动避让");
+  }
+
+  const regions = trip?.routeMap?.regions;
+  if (Array.isArray(regions) && regions.length) {
+    for (const region of regions) {
+      const base = `routeMap region ${region.id || "?"}`;
+      if (region.mapMode !== "real-basemap" || region.scope !== "real-basemap" || region.templateId !== "real-basemap") {
+        errors.push(`${base} 与 map.basemap 不一致；请重新运行 npm run build:map`);
+      }
+      if (region.baseImage !== basemap.file) errors.push(`${base} 的 baseImage 与 map.basemap.file 不一致`);
+      const projection = region.projection || {};
+      if (projection.type !== "web-mercator") errors.push(`${base} 的 projection.type 必须是 web-mercator`);
+      const expected = basemap.bounds;
+      if (!Array.isArray(projection.bounds) || !expected || projection.bounds.length !== expected.length || projection.bounds.some((value, index) => Math.abs(value - expected[index]) > 1e-9)) {
+        errors.push(`${base} 的 projection.bounds 与 map.basemap.bounds 不一致`);
+      }
+      if (typeof region.disclaimer === "string" && typeof basemap.attribution === "string" && !region.disclaimer.includes(basemap.attribution)) {
+        warnings.push(`${base} 的免责声明未包含底图版权署名`);
+      }
+    }
+  }
+} else if (Array.isArray(trip?.routeMap?.regions) && trip.routeMap.regions.some((region) => region.scope === "real-basemap")) {
+  errors.push("routeMap 仍是真实底图输出，但 map.basemap 已被移除；请重新运行 npm run build:map");
+}
+
 if (!uninitialized && config?.modules?.overview === true && map?.mapMode === "template-auto") {
-  const manifestPath = "assets/maps/templates/manifest.json";
-  const manifest = exists(manifestPath) ? readJson(manifestPath) : null;
-  if (!manifest) errors.push(`缺少冻结地图模板清单：${manifestPath}`);
-  for (const template of manifest?.templates || []) {
-    if (!template.id || !template.file || !template.safeArea) errors.push("地图模板清单包含无效条目");
-    if (template.file && !exists(template.file)) errors.push(`缺少冻结地图底图：${template.file}`);
+  if (!basemap) {
+    const manifestPath = "assets/maps/templates/manifest.json";
+    const manifest = exists(manifestPath) ? readJson(manifestPath) : null;
+    if (!manifest) errors.push(`缺少冻结地图模板清单：${manifestPath}`);
+    for (const template of manifest?.templates || []) {
+      if (!template.id || !template.file || !template.safeArea) errors.push("地图模板清单包含无效条目");
+      if (template.file && !exists(template.file)) errors.push(`缺少冻结地图底图：${template.file}`);
+    }
   }
   if (!Array.isArray(map.places) || !map.places.length) errors.push("trip-data.json map.places 必须包含地点");
   const placeIds = new Set();
@@ -188,7 +276,7 @@ if (!uninitialized && config?.modules?.overview === true && map?.mapMode === "te
     placeIds.add(place.id);
     if (regionDefinitions.length > 1 && !place.countryCode && !place.mapRegionId) errors.push(`多目的地地图中的地点 ${place.id || "unknown"} 必须提供 countryCode 或 mapRegionId`);
     if (place.countryCode && destinationCodes.size && !destinationCodes.has(String(place.countryCode).toUpperCase())) warnings.push(`地点 ${place.id} 不属于目的地国家，将不会显示在地图中`);
-    if (!Number.isFinite(Number(place.geo?.lat)) || !Number.isFinite(Number(place.geo?.lng))) warnings.push(`地点 ${place.id || "unknown"} 缺少有效经纬度，将使用确定性备用布局`);
+    if (!Number.isFinite(Number(place.geo?.lat)) || !Number.isFinite(Number(place.geo?.lng))) warnings.push(`地点 ${place.id || "unknown"} 缺少有效经纬度，将使用确定性备用布局${basemap ? "；真实底图模式下该位置与真实地理不符" : ""}`);
   }
   for (const route of map.routes || []) {
     if (!Number.isInteger(route.day) || !Array.isArray(route.placeIds) || route.placeIds.length < 2) errors.push("每条 Map route 必须包含 day 和至少两个 placeIds");
