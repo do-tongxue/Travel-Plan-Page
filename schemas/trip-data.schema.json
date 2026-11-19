@@ -297,6 +297,30 @@
         }
       }
     },
+    "basemap": {
+      "type": "object",
+      "description": "Opt-in advanced/DIY real basemap. Ordinary generation leaves this out; map.mapMode stays template-auto.",
+      "required": ["file", "bounds", "attribution"],
+      "properties": {
+        "file": { "type": "string", "minLength": 1 },
+        "bounds": {
+          "type": "array",
+          "description": "[west, south, east, north] in WGS84 degrees.",
+          "minItems": 4,
+          "maxItems": 4,
+          "prefixItems": [
+            { "type": "number", "minimum": -180, "maximum": 180 },
+            { "type": "number", "minimum": -85.05112878, "maximum": 85.05112878 },
+            { "type": "number", "minimum": -180, "maximum": 180 },
+            { "type": "number", "minimum": -85.05112878, "maximum": 85.05112878 }
+          ],
+          "items": false
+        },
+        "attribution": { "type": "string", "minLength": 1 },
+        "provider": { "type": "string", "minLength": 1 },
+        "zoom": { "type": "integer", "minimum": 0, "maximum": 22 }
+      }
+    },
     "mapPlace": {
       "type": "object",
       "required": ["id"],
@@ -334,6 +358,7 @@
         "schemaVersion": { "const": "1.0-lite" },
         "mapMode": { "const": "template-auto" },
         "templateId": { "type": "string", "minLength": 1 },
+        "basemap": { "$ref": "#/$defs/basemap" },
         "defaultRegionId": { "type": "string", "minLength": 1 },
         "region": { "$ref": "#/$defs/region" },
         "regions": {
