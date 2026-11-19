@@ -2,6 +2,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { assertBasemapBounds, layoutWebMercator } from "./web-mercator.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const MANIFEST_PATH = "assets/maps/templates/manifest.json";
@@ -427,9 +428,20 @@ function mapDataForRegion(mapData, region, regionCount) {
 
 function buildRegion(mapData, manifest) {
   if (!mapData.places.length) return null;
-  const selection = templateSelection(mapData, manifest);
-  const template = selection.template;
-  const points = separatePoints(projectedLayout(mapData.places, mapData.routes, template.safeArea), mapData.places, template.safeArea);
+  const basemap = mapData.basemap && typeof mapData.basemap === "object" ? mapData.basemap : null;
+  let selection;
+  let template;
+  let points;
+  if (basemap) {
+    assertBasemapBounds(basemap.bounds);
+    template = { id: "real-basemap", file: basemap.file, safeArea: { x: 0, y: 0, width: GOLDEN.width, height: GOLDEN.height } };
+    selection = { template, reason: "real-basemap-explicit", metrics: mapMetrics(mapData) };
+    points = layoutWebMercator(mapData.places, basemap.bounds, GOLDEN);
+  } else {
+    selection = templateSelection(mapData, manifest);
+    template = selection.template;
+    points = separatePoints(projectedLayout(mapData.places, mapData.routes, template.safeArea), mapData.places, template.safeArea);
+  }
   const occupied = [{ x: 18, y: 38, width: 335, height: 360 }, ...mapData.places.map((place) => { const point = points.get(place.id); return { x: point.x - 17, y: point.y - 17, width: 34, height: 34 }; })];
   const renderedPlaces = mapData.places.map((place, index) => {
     const point = points.get(place.id);
@@ -463,19 +475,19 @@ function buildRegion(mapData, manifest) {
     id: regionId,
     label: mapData.region.label,
     countryCode: mapData.region.countryCode,
-    scope: "template-schematic",
-    mapMode: "frozen-template",
+    scope: basemap ? "real-basemap" : "template-schematic",
+    mapMode: basemap ? "real-basemap" : "frozen-template",
     templateId: template.id,
     mapModeReason: selection.reason,
     mapModeMetrics: Object.fromEntries(Object.entries(selection.metrics).map(([key, value]) => [key, typeof value === "number" ? Number(value.toFixed(2)) : value])),
     days,
     canvas: { width: GOLDEN.width, height: GOLDEN.height },
-    projection: { type: "relative-schematic", bounds: null },
+    projection: basemap ? { type: "web-mercator", bounds: basemap.bounds, padding: 0 } : { type: "relative-schematic", bounds: null },
     baseImage: template.file,
     title: mapData.region.title || mapData.title || `${mapData.region.label} · 旅行路线`,
-    ariaLabel: `${mapData.region.label}模板化旅行路线示意图，共${days.length}天`,
+    ariaLabel: `${mapData.region.label}${basemap ? "旅行路线图" : "模板化旅行路线示意图"}，共${days.length}天`,
     description: mapData.region.description,
-    disclaimer: mapData.disclaimer || manifest.disclaimer,
+    disclaimer: basemap ? `${basemap.attribution}；路线为行程示意，导航请以地图服务为准。` : mapData.disclaimer || manifest.disclaimer,
     heading: { text: mapData.region.heading || mapData.region.label, x: 33, y: 105, size: 40 },
     legend: { x: 35, y: 168, gap: 43 },
     annotations: [],
@@ -516,9 +528,18 @@ if (config.modules?.overview === false) {
   if (!Array.isArray(mapData.routes) || !mapData.routes.length) throw new Error("trip-data.json map.routes must contain routes");
 
   const definitions = destinationRegions(mapData, tripData);
+  if (mapData.basemap && definitions.length > 1) {
+    throw new Error("map.basemap supports a single destination region; split the trip or use template-auto");
+  }
   const regions = definitions.map((definition) => buildRegion(mapDataForRegion(mapData, definition, definitions.length), manifest)).filter(Boolean);
   if (!regions.length) throw new Error("No destination map regions contain usable places");
-  for (const region of regions) await fs.access(absolute(region.baseImage));
+  for (const region of regions) {
+    try {
+      await fs.access(absolute(region.baseImage));
+    } catch {
+      throw new Error(`Map base image not found: ${region.baseImage}. Run npm run build:basemap or restore the file.`);
+    }
+  }
   const output = {
     ...tripData,
     config,

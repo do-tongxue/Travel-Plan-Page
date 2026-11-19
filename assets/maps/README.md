@@ -18,3 +18,5 @@ Builder 先根据地点经纬度、路线跨度、方向、密度和连通关系
 十张图片均作为本项目的固定静态模板资产；普通生成不得覆盖这些文件。
 
 `aster-isles-base.png`、`mist-coast-base.png`、`generic-diagram-template.svg` 与 `generated-japan.svg` 仅作为旧实现参考保留，不再进入默认 Builder 链路。
+
+可选的 `map.basemap` 模式会把用户生成的底图写到 `assets/maps/real/`，永远不覆盖 `templates/` 下的固定模板，也不进入 `manifest.json`。说明见 [`references/advanced/real-basemap.md`](../../references/advanced/real-basemap.md)。

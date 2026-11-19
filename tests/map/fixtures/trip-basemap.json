@@ -1,0 +1,99 @@
+{
+  "$schema": "../../../schemas/trip-data.schema.json",
+  "schemaVersion": "2.0-lite",
+  "config": {
+    "schemaVersion": "1.0.0",
+    "modules": {
+      "flights": false,
+      "overview": true,
+      "itinerary": true,
+      "todo": false,
+      "driving": false,
+      "ledger": false
+    },
+    "language": "zh-CN",
+    "persistence": { "mode": "local" }
+  },
+  "metadata": {
+    "tripId": "basemap-fixture",
+    "title": "Basemap Fixture",
+    "language": "zh-CN",
+    "assets": {}
+  },
+  "trip": {
+    "status": "draft",
+    "startDate": "2026-01-01",
+    "endDate": "2026-01-01",
+    "dayCount": 1,
+    "nightCountAway": 0,
+    "countries": [{ "code": "CN", "name": "China", "nameZh": "中国" }],
+    "primaryDestinationCountries": ["CN"],
+    "primaryDestinationName": "测试",
+    "citiesAndAreas": ["测试"],
+    "routeSummary": "",
+    "groupSize": 1
+  },
+  "flightJourneys": [],
+  "flights": [],
+  "accommodations": [],
+  "groundTransport": {
+    "rentalCar": null,
+    "rentalChecklist": [],
+    "drivingNotes": [],
+    "drivingReferenceLinks": [],
+    "plannedRoadLegs": [],
+    "publicTransitAndRail": []
+  },
+  "days": [
+    {
+      "day": 1,
+      "date": "2026-01-01",
+      "title": "Fixture Day",
+      "locations": ["A", "B"],
+      "schedule": [{ "id": "s1", "time": "09:00", "type": "attraction", "text": "A" }]
+    }
+  ],
+  "places": [
+    { "id": "a", "name": "A", "geo": { "lat": 30, "lng": 100 } },
+    { "id": "b", "name": "B", "geo": { "lat": 32, "lng": 102 } },
+    { "id": "c", "name": "C", "geo": { "lat": 31, "lng": 101 } },
+    { "id": "d", "name": "D", "geo": { "lat": 30.5, "lng": 100.5 } }
+  ],
+  "restaurants": [],
+  "bookingsAndTickets": [],
+  "ticketPlanning": {
+    "statusStorage": "local",
+    "statusStorageNote": "门票状态默认只保存在当前浏览器。",
+    "items": []
+  },
+  "preTrip": { "packingItems": [], "preparationsExplicitlyMentioned": [], "missingNote": "" },
+  "mapLinks": {
+    "providedGoogleMapsLinks": [],
+    "note": "",
+    "cityLevelNavigationDisabled": false,
+    "navigationPolicy": { "noNavigationTypes": ["flight", "note", "rest"], "selfNavigationTypes": ["drive", "return", "transfer", "check-in", "check-out", "restaurant", "attraction", "walk", "hike"] },
+    "navigationPlaces": []
+  },
+  "issuesAndUncertainties": [],
+  "map": {
+    "schemaVersion": "1.0-lite",
+    "mapMode": "template-auto",
+    "templateId": "auto",
+    "region": { "id": "fixture", "label": "Fixtures", "countryCode": "CN" },
+    "basemap": {
+      "file": "tests/map/fixtures/basemap.png",
+      "bounds": [100, 30, 102, 32],
+      "attribution": "Test attribution",
+      "provider": "Fixture tiles",
+      "zoom": 10
+    },
+    "places": [
+      { "id": "a", "name": "A", "geo": { "lat": 30, "lng": 100 } },
+      { "id": "b", "name": "B", "geo": { "lat": 32, "lng": 102 } },
+      { "id": "c", "name": "C", "geo": { "lat": 31, "lng": 101 } },
+      { "id": "d", "name": "D", "geo": { "lat": 30.5, "lng": 100.5 } }
+    ],
+    "routes": [{ "day": 1, "placeIds": ["a", "b"] }],
+    "dailyRoutes": [{ "day": 1, "placeIds": ["a", "b"] }]
+  }
+}

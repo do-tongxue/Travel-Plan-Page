@@ -29,3 +29,11 @@ The bundled Boundary Library is retained only for advanced/legacy maintenance an
 - Provenance note: The exact retrieval date and OpenStreetMap database snapshot were not recorded. A maintainer must record them when these cached files are refreshed.
 
 Source and license review is a maintainer task whenever Boundary Library files are added, refreshed, or prepared for a public release. Ordinary trip generation must not use or refresh this library.
+
+## Esri ArcGIS basemap tiles (optional advanced workflow)
+
+- Source: Esri ArcGIS REST services `Canvas/World_Light_Gray_Base` and `World_Street_Map`, fetched on demand only when a user runs `scripts/build-basemap.mjs` for the opt-in `map.basemap` mode.
+- License: Governed by the applicable ArcGIS service terms. Not covered by this project's MIT license. This repository does not redistribute tiles or generated basemap images.
+- Attribution: The service `copyrightText` is stored in each generated sidecar and rendered into the basemap image and the region disclaimer. Light: `Esri, HERE, Garmin, (c) OpenStreetMap contributors, and the GIS user community`. Street: `Sources: Esri, HERE, Garmin, USGS, Intermap, INCREMENT P, NRCan, Esri Japan, METI, Esri China (Hong Kong), Esri Korea, Esri (Thailand), NGCC, (c) OpenStreetMap contributors, and the GIS User Community`.
+- Repository changes: None. The test suite uses a synthetic solid-color PNG, not provider imagery.
+- Provenance note: Each sidecar records provider, zoom, bounds, canvas, tile count, and attribution. The tile snapshot is not pinned; users must confirm that their intended use complies with the provider's terms.

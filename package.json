@@ -8,8 +8,10 @@
     "boundaries:index": "node scripts/build-boundary-index.mjs",
     "boundaries:validate": "node scripts/validate-boundaries.mjs",
     "build:map": "node scripts/build-map.mjs",
+    "build:basemap": "node scripts/build-basemap.mjs",
     "validate": "node scripts/validate-lite.mjs",
     "test:runtime": "node --test tests/runtime/runtime-storage.test.cjs",
+    "test:map": "node --test tests/map/*.test.mjs",
     "preview": "node local-preview-server.mjs"
   }
 }
